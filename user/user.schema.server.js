@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema({
     lastName: String,
     email: String,
     phone: String,
-    address: String
+    address: String,
+    role: String
 }, {collection: 'user'});
 
 module.exports = userSchema;

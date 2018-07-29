@@ -10,10 +10,38 @@ function findSectionsForCourse(courseId) {
     return sectionModel.find({courseId: courseId});
 }
 
+function decrementSectionSeats(sectionId) {
+    return sectionModel.update({
+        _id: sectionId
+    }, {
+        $inc: {seats: -1}
+    })
+}
+
+
+function incrementSectionSeats(sectionId) {
+    return sectionModel.update({
+        _id: sectionId
+    }, {
+        $inc: {seats: +1}
+    })
+}
+
+function deleteSection(sectionId) {
+    return sectionModel.remove({_id: sectionId});
+}
+
+function updateSection(section) {
+    return sectionModel.findOneAndUpdate({_id : section._id}, {$set: section});
+}
 
 const api = {
     createSection: createSection,
-    findSectionsForCourse: findSectionsForCourse
+    findSectionsForCourse: findSectionsForCourse,
+    decrementSectionSeats: decrementSectionSeats,
+    incrementSectionSeats: incrementSectionSeats,
+    deleteSection: deleteSection,
+    updateSection: updateSection
 };
 
 module.exports = api;

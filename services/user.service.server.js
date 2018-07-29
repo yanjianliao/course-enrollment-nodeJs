@@ -6,12 +6,40 @@ module.exports = function (app) {
     app.post('/api/user', createUser);
     app.post('/api/login', login);
     app.get('/api/logout', logout);
+    app.put('/api/profile', update);
+    app.delete('/api/profile', profileDelete);
+
+
+    function profileDelete(req, res) {
+        const user = req.body;
+        req.session['currentUser'] = user;
+        userModel.profileDelete(user)
+            .then(response => res.json(response))
+    }
+
+    function update(req, res) {
+        const user = req.body;
+        req.session['currentUser'] = user;
+        userModel.updateUser(user)
+            .then(response => res.json(response))
+        // res.send('Ok')
+    }
 
     function createUser(req, res) {
         const user = req.body;
         req.session['currentUser'] = user;
-        userModel.createUser(user)
-            .then(response => res.json(response));
+        userModel.findUserByUsername(user.username).then(
+            response => {
+                if(response) {
+                    res.json({error: 'Username already token!'})
+                } else {
+                    userModel
+                        .createUser(user)
+                        .then(response => res.json(response));
+                }
+            }
+        );
+
     }
 
     function logout(req, res) {
@@ -26,14 +54,16 @@ module.exports = function (app) {
                 if(!response) {
                     res.json({error: 'Invalid credentials'});
                 } else {
-                    req.session['currentUser'] = user;
+                    req.session['currentUser'] = response;
                     res.json(user);
                 }
             })
     }
 
     function profile(req, res) {
-        res.send(req.session['currentUser']);
+        const user = req.session['currentUser'];
+        userModel.findUserByUsername(user.username)
+            .then(user => res.json(user));
     }
 
 };
