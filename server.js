@@ -9,10 +9,9 @@ mongoose.connect(process.env.MONGODB_URI ||"mongodb://localhost/students");
 
 // allow other websites reach this server
 app.use(function (req, res, next) {
-
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Access-Control-Allow-Origin", "https://morning-dawn-31711.herokuapp.com/");
+    // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    // res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods",
