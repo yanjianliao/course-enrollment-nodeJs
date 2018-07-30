@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const session = require('express-session');
 const app = express();
 
-mongoose.connect("mongodb://localhost/students");
+// mongoose.connect("mongodb://localhost/students");
 
 // allow other websites reach this server
 app.use(function (req, res, next) {
@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 });
 
 //pass app to different services
-require('./services/user.service.server')(app);
-require('./services/section.service.server')(app);
+// require('./services/user.service.server')(app);
+// require('./services/section.service.server')(app);
 
 app.listen(3000);
