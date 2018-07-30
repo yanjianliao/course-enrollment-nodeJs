@@ -62,6 +62,10 @@ module.exports = function (app) {
 
     function profile(req, res) {
         const user = req.session['currentUser'];
+        if(!user) {
+            res.json({error: 'no user'});
+            return;
+        }
         userModel.findUserByUsername(user.username)
             .then(user => res.json(user));
     }

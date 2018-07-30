@@ -49,7 +49,13 @@ module.exports = function (app) {
 
 
     function findSectionsForStudent(req, res) {
+
         let currentUser = req.session.currentUser;
+        console.log(currentUser);
+        if(!currentUser) {
+            res.json({error: 'no user'});
+            return;
+        }
         let studentId = currentUser._id;
 
         enrollmentModel
