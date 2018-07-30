@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 // const mongoose = require('mongoose');
 const session = require('express-session');
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // mongoose.connect("mongodb://localhost/students");
 
@@ -34,4 +35,4 @@ app.get('/', function (req, res) {
 // require('./services/user.service.server')(app);
 // require('./services/section.service.server')(app);
 
-app.listen(3000);
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
